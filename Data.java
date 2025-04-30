@@ -1,82 +1,69 @@
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("MAX value: " + Data.MAX);
-        Data d1 = new Data(7, 5);
-        System.out.println("Grid after instantiation (before repopulation):\n" + d1);
-        d1.repopulate();
-        System.out.println("\nGrid after repopulation:\n" + d1);
-        int increasingCols1 = d1.countIncreasingCols();
-        System.out.println("\nNumber of increasing columns in random grid: " + increasingCols1);
+import java.util.Random;
 
-        int[][] testArr = {
-                {10, 50, 40},
-                {20, 40, 20},
-                {30, 50, 30}
-        };
-        Data d2 = new Data(testArr);
-        System.out.println("\nTest Grid:\n" + d2);
-        int increasingCols2 = d2.countIncreasingCols();
-        System.out.println("\nNumber of increasing columns in test grid: " + increasingCols2);
+public class Data {
+    public static final int MAX = (int) (Math.random() * Integer.MAX_VALUE);
+    private int[][] grid;
 
-        int[][] testArr2 = {
-                {10, 20, 50},
-                {30, 35, 60},
-                {20, 40, 70},
-                {40, 45, 80}
-        };
-        Data d3 = new Data(testArr2);
-        System.out.println("\nTest Grid 2:\n" + d3);
-        int increasingCols3 = d3.countIncreasingCols();
-        System.out.println("\nNumber of increasing columns in test grid 2: " + increasingCols3);
-
-        int[][] testArr3 = {
-                {5}
-        };
-        Data d4 = new Data(testArr3);
-        System.out.println("\nTest Grid 3 (single row):\n" + d4);
-        int increasingCols4 = d4.countIncreasingCols();
-        System.out.println("\nNumber of increasing columns in test grid 3: " + increasingCols4);
-
-        int[][] testArr4 = {
-                {1, 2, 3},
-                {4, 5, 6},
-                {7, 8, 9}
-        };
-        Data d5 = new Data(testArr4);
-        System.out.println("\nTest Grid 4 (all increasing columns):\n" + d5);
-        int increasingCols5 = d5.countIncreasingCols();
-        System.out.println("\nNumber of increasing columns in test grid 4: " + increasingCols5);
-
-        int[][] testArr5 = {
-                {3, 2, 1},
-                {6, 5, 4},
-                {9, 8, 7}
-        };
-        Data d6 = new Data(testArr5);
-        System.out.println("\nTest Grid 5 (no increasing columns):\n" + d6);
-        int increasingCols6 = d6.countIncreasingCols();
-        System.out.println("\nNumber of increasing columns in test grid 5: " + increasingCols6);
-
-        // Test with the grid provided in the first image
-        int[][] testArrImage1 = {
-                {10, 50, 40},
-                {20, 40, 20},
-                {30, 50, 30}
-        };
-        Data d7 = new Data(testArrImage1);
-        System.out.println("\nTest Grid from Image 1:\n" + d7);
-        int increasingCols7 = d7.countIncreasingCols();
-        System.out.println("\nNumber of increasing columns in test grid from image 1: " + increasingCols7);
-
-        // Test with the grid provided in the second image
-        int[][] testArrImage2 = {
-                {10, 540, 440, 440},
-                {220, 450, 440, 190}
-        };
-        Data d8 = new Data(testArrImage2);
-        System.out.println("\nTest Grid from Image 2:\n" + d8);
-        int increasingCols8 = d8.countIncreasingCols();
-        System.out.println("\nNumber of increasing columns in test grid from image 2: " + increasingCols8);
+    public Data(int rows, int columns) {
+        grid = new int[rows][columns];
     }
+
+    public Data(int[][] arr) {
+        grid = arr;
+    }
+
+ 
+    public void repopulate() {
+        Random random = new Random();
+        for (int row = 0; row < grid.length; row++) {
+            for (int col = 0; col < grid[0].length; col++) {
+                int val = 0;
+                while (val % 10 != 0 || val % 100 == 0) {
+                    val = (int) (Math.random() * MAX + 1);
+                }
+                grid[row][col] = val;
+            }
+        }
+    }
+
+
+    public int countIncreasingCols() {
+        int count = 0;
+        if (grid != null && grid.length > 0 && grid[0].length > 0) {
+            int numRows = grid.length;
+            int numCols = grid[0].length;
+
+            for (int col = 0; col < numCols; col++) {
+                int increasing = 1; // Initialize with 1 because a single-row column is increasing
+                for (int row = 1; row < numRows; row++) {
+                    if (grid[row][col] >= grid[row - 1][col]) {
+                        increasing++;
+                    }
+                }
+                if (increasing == numRows) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public String toString() {
+        if (grid == null || grid.length == 0) {
+            return "Empty grid";
+        }
+        String s = "";
+        for (int[] row : grid) {
+            for (int col : row) {
+                s += String.format("%-6d", col); // Format with width 6
+            }
+            s += "\n";
+        }
+        return s;
+    }
+
+    // There may be instance variables, constructors
+    //and methods that are not shown.
 }
