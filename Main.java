@@ -69,7 +69,7 @@ public class Main {
         int increasingCols7 = d7.countIncreasingCols();
         System.out.println("\nNumber of increasing columns in test grid from image 1: " + increasingCols7);
 
-        // Test with the grid provided in the second image
+
         int[][] testArrImage2 = {
                 {10, 540, 440, 440},
                 {220, 450, 440, 190}
