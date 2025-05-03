@@ -35,7 +35,7 @@ public class Data {
             int numCols = grid[0].length;
 
             for (int col = 0; col < numCols; col++) {
-                int increasing = 1; // Initialize with 1 because a single-row column is increasing
+                int increasing = 1; 
                 for (int row = 1; row < numRows; row++) {
                     if (grid[row][col] >= grid[row - 1][col]) {
                         increasing++;
@@ -57,13 +57,12 @@ public class Data {
         String s = "";
         for (int[] row : grid) {
             for (int col : row) {
-                s += String.format("%-6d", col); // Format with width 6
+                s += String.format("%-6d", col);
             }
             s += "\n";
         }
         return s;
     }
 
-    // There may be instance variables, constructors
-    //and methods that are not shown.
+
 }
